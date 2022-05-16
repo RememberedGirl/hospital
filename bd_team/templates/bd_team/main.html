@@ -1,0 +1,32 @@
+{% extends 'bd_team/base.html' %}
+{% block content %}
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for p in object_list%}
+        <div class="col">
+          <div class="card shadow-sm">
+              {% if p.public_photo %}
+           <img src="{{ p.public_photo.url}}" class="img-thumbnail" width="200"  hspace="25">
+              {% else %}
+                            {% if p.photo%}
+                                <img src="{{ p.photo.url}}" class="img-thumbnail" width="200"  hspace="25">
+                            {% endif%}
+              {% endif%}
+            <div class="card-body">
+                <p ><h3><a href="{{ p.get_absolute_url}}"  style="color:black;" class="card-text"> {{p.name}} </a></h3></p>
+              <p class="card-text">{{p.role}}</p>
+              {% if p.biog%}
+                            <p class="card-text">{{p.biog}}</p>
+              {% endif%}
+                {% if p.role_id != 1 %}
+            
+               {%endif %}
+            </div>
+          </div>
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+  </div>
+{% endblock %}

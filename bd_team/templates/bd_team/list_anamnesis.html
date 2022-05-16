@@ -1,0 +1,56 @@
+{% extends 'bd_team/base.html' %}
+{% block content %}
+{% if object_list %}
+<table class="table table-striped table-hover">
+   <tr>
+      {% for h in head %}
+      <th scope="col">{{ h }}</th>
+      {% endfor %}
+      <th scope="col">Удалить</th>
+   </tr>
+   {% for g in object_list %}
+   {% if g.doctor.id == doctor or doctor == None %}
+
+   <tr>
+      <th scope="col"><a href="{%url 'update_anamnesis' g.id%}"  style="color:black;" class="nav-link">{{ g.diagnosis }}</a></th>
+      <th scope="col">{{ g.time0 }}</th>
+      <th scope="col">{{ g.time1 }}</th>
+      <th scope="col">{{ g.info1 }}</th>
+      <th scope="col">{{ g.info0 }}</th>
+      <th scope="col">{{ g.info2 }}</th>
+
+      <th scope="col"><a href="{%url 'list_game_doctor' g.doctor.id%}"  style="color:black;" class="nav-link">{{ g.doctor }}</a></th>
+
+      <th scope="col"> <a href="{%url 'delete_anamnesis' g.id%}"  ><button class="btn btn-success" type="submit">Удалить заболевание</button></a></th>
+   </tr>
+   {% endif %}
+   {% endfor %}
+</table>
+{% else %}
+<p>Нет истории <болезней></болезней></p>
+{% endif %}
+
+{%if act %}
+   <a href="{%url 'add_anamnesis' %}"  ><button class="btn btn-success" type="submit">Добавить заболевание</button></a>
+{% comment %}
+<div class="position-absolute bottom-0 end-0">
+   <div class="btn-group">
+      <a href="{%url 'export_game_exel' 0%}"  ><button  class="btn btn-primary btn-sm" type="submit">Выгрузить в exel</button></a>
+      <a href="{%url 'export_game_json' 0%}"  ><button class="btn btn-primary btn-sm" type="submit">Выгрузить в json</button></a>
+      <a href="{%url 'export_game_pdf' 0%}"  ><button class="btn btn-primary btn-sm" type="submit">Выгрузить в pdf</button></a>
+   </div>
+</div>
+{% endcomment %}
+{%else%}
+{% comment %}
+<div class="position-absolute bottom-0 end-0">
+   <div class="btn-group">
+      <a href="{%url 'export_game_exel' 1%}" > <button class="btn btn-primary btn-sm" type="submit">Выгрузить в exel</button></a>
+      <a href="{%url 'export_game_json' 1%}" > <button class="btn btn-primary btn-sm" type="submit">Выгрузить в json</button></a>
+      <a href="{%url 'export_game_pdf'  1%}"  > <button class="btn btn-primary btn-sm" type="submit">Выгрузить в pdf</button></a>
+   </div>
+</div>
+{% endcomment %}
+
+{% endif %}
+{% endblock %}
