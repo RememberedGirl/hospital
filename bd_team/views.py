@@ -43,7 +43,7 @@ class MainPage(DataMixin, ListView):
 
 # -------Work player -------
 
-class AddPlayer(DataMixin, MyPermissionMixin, CreateView):
+class AddPlayer(LoginRequiredMixin,DataMixin, MyPermissionMixin, CreateView):
     raise_exception = False
     model = Player
     fields = '__all__'
@@ -58,7 +58,7 @@ class AddPlayer(DataMixin, MyPermissionMixin, CreateView):
         return context
 
 
-class PlayerUpdateView(DataMixin, MyPermissionMixin, DoctorPermissionMixin, UpdateView):
+class PlayerUpdateView(LoginRequiredMixin,DataMixin, MyPermissionMixin, DoctorPermissionMixin, UpdateView):
     model = Player
     permission_required = 'bd_team.change_player'
     template_name = 'bd_team/update.html'
@@ -71,14 +71,14 @@ class PlayerUpdateView(DataMixin, MyPermissionMixin, DoctorPermissionMixin, Upda
         return context
 
 
-class PlayerDeleteView(DataMixin, MyPermissionMixin, DeleteView):
+class PlayerDeleteView(LoginRequiredMixin,DataMixin, MyPermissionMixin, DeleteView):
     model = Player
     permission_required = 'bd_team.delete_player'
     fields = '__all__'
     success_url = reverse_lazy('list_players')
     template_name = 'bd_team/delete.html'
 
-#@permission_required('bd_team.view_player')
+@permission_required('bd_team.view_player') #было откоментированно
 def show_player_card(request, player_id):
     player = get_object_or_404(Player, pk=player_id)
     context = get_user_context()
@@ -87,7 +87,7 @@ def show_player_card(request, player_id):
     return render(request, 'bd_team/card_player.html', context)
 
 #masha code patient
-class AddPatient(DataMixin, MyPermissionMixin, CreateView):
+class AddPatient(LoginRequiredMixin,DataMixin, MyPermissionMixin, CreateView):
     raise_exception = False
     model = Patient
     fields = '__all__'
@@ -101,7 +101,7 @@ class AddPatient(DataMixin, MyPermissionMixin, CreateView):
         context = dict(list(context.items()) + list(c_def.items()))
         return context
 
-class PatientUpdateView(DataMixin, MyPermissionMixin, UpdateView):
+class PatientUpdateView(LoginRequiredMixin,DataMixin, MyPermissionMixin, UpdateView):
     model = Patient
     permission_required = 'bd_team.change_patient'
     template_name = 'bd_team/update_patient.html'
@@ -114,7 +114,7 @@ class PatientUpdateView(DataMixin, MyPermissionMixin, UpdateView):
         return context
 
 
-class PatientDeleteView(DataMixin, MyPermissionMixin, DeleteView):
+class PatientDeleteView(LoginRequiredMixin,DataMixin, MyPermissionMixin, DeleteView):
     model = Patient
     permission_required = 'bd_team.delete_patient'
     fields = '__all__'
@@ -131,7 +131,7 @@ def show_patient_card(request, patient_id):
     return render(request, 'bd_team/card_patient.html', context)
 #end masha code patiente
 
-class AnamnesisCreateView(DataMixin, MyPermissionMixin, CreateView):
+class AnamnesisCreateView(LoginRequiredMixin,DataMixin, MyPermissionMixin, CreateView):
     model = Anamnesis
     permission_required = 'bd_team.add_anamnesis'
     template_name = 'bd_team/add_anamnesis.html'
@@ -145,7 +145,7 @@ class AnamnesisCreateView(DataMixin, MyPermissionMixin, CreateView):
         return context
 
 
-class AnamnesisUpdateView(DataMixin, MyPermissionMixin, UpdateView):
+class AnamnesisUpdateView(LoginRequiredMixin,DataMixin, MyPermissionMixin, UpdateView):
     model = Anamnesis
     permission_required = 'bd_team.change_anamnesis'
     template_name = 'bd_team/update.html'
@@ -159,7 +159,7 @@ class AnamnesisUpdateView(DataMixin, MyPermissionMixin, UpdateView):
         return context
 
 
-class AnamnesisDeleteView(DataMixin, MyPermissionMixin, DeleteView):
+class AnamnesisDeleteView(LoginRequiredMixin,DataMixin, MyPermissionMixin, DeleteView):
     model = Anamnesis
     permission_required = 'bd_team.delete_anamnesis'
     fields = '__all__'
@@ -173,7 +173,7 @@ class AnamnesisDeleteView(DataMixin, MyPermissionMixin, DeleteView):
         return context
 
 
-class ListChartAnamnesis(DataMixin, ListView):
+class ListChartAnamnesis(LoginRequiredMixin,DataMixin, ListView):
     model = Anamnesis
     template_name = 'bd_team/list_anamnesis.html'
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -184,7 +184,7 @@ class ListChartAnamnesis(DataMixin, ListView):
         context = dict(list(context.items()) + list(c_def.items()))
         return context
 
-class ListChartAnamnesisDoctor(DataMixin, ListView):
+class ListChartAnamnesisDoctor(LoginRequiredMixin,DataMixin, ListView):
     model = Anamnesis
     template_name = 'bd_team/list_anamnesis.html'
 
@@ -201,7 +201,7 @@ class ListChartAnamnesisDoctor(DataMixin, ListView):
 
 #end masha code anamnesis
 
-class ListPlayer(DataMixin, ListView):
+class ListPlayer(LoginRequiredMixin,DataMixin, ListView):
     model = Player
     template_name = 'bd_team/players_list.html'
 
@@ -214,7 +214,7 @@ class ListPlayer(DataMixin, ListView):
         return context
 
 #@permission_required('bd_team.view_patient')
-class ListPatient(DataMixin, MyPermissionMixin, ListView):
+class ListPatient(LoginRequiredMixin,DataMixin, MyPermissionMixin, ListView):
     model = Patient
     template_name = 'bd_team/patients_list.html'
 
@@ -230,7 +230,7 @@ class ListPatient(DataMixin, MyPermissionMixin, ListView):
 
 # -------Work game -------
 
-class GameCreateView(DataMixin, MyPermissionMixin, CreateView):
+class GameCreateView(LoginRequiredMixin,DataMixin, MyPermissionMixin, CreateView):
     model = Game
     permission_required = 'bd_team.add_game'
     template_name = 'bd_team/add_game.html'
@@ -244,7 +244,7 @@ class GameCreateView(DataMixin, MyPermissionMixin, CreateView):
         return context
 
 
-class GameUpdateView(DataMixin, MyPermissionMixin, UpdateView):
+class GameUpdateView(LoginRequiredMixin,DataMixin, MyPermissionMixin, UpdateView):
     model = Player_Game
     permission_required = 'bd_team.change_game'
     template_name = 'bd_team/update.html'
@@ -258,7 +258,7 @@ class GameUpdateView(DataMixin, MyPermissionMixin, UpdateView):
         return context
 
 
-class GameDeleteView(DataMixin, MyPermissionMixin, DeleteView):
+class GameDeleteView(LoginRequiredMixin,DataMixin, MyPermissionMixin, DeleteView):
     model = Game
     permission_required = 'bd_team.delete_game'
     fields = '__all__'
@@ -272,7 +272,7 @@ class GameDeleteView(DataMixin, MyPermissionMixin, DeleteView):
         return context
 
 
-class ListChartGame(DataMixin, ListView):
+class ListChartGame(LoginRequiredMixin,DataMixin, ListView):
     model = Game
     template_name = 'bd_team/list_game.html'
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -283,7 +283,7 @@ class ListChartGame(DataMixin, ListView):
         context = dict(list(context.items()) + list(c_def.items()))
         return context
 
-class ListChartGameDoctor(DataMixin, ListView):
+class ListChartGameDoctor(LoginRequiredMixin,DataMixin, ListView):
     model = Game
     template_name = 'bd_team/list_game.html'
 
