@@ -78,7 +78,7 @@ class PlayerDeleteView(LoginRequiredMixin,DataMixin, MyPermissionMixin, DeleteVi
     success_url = reverse_lazy('list_players')
     template_name = 'bd_team/delete.html'
 
-@permission_required('bd_team.view_player') #было откоментированно
+#@permission_required('bd_team.view_player') #было откоментированно
 def show_player_card(request, player_id):
     player = get_object_or_404(Player, pk=player_id)
     context = get_user_context()
