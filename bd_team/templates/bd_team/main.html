@@ -14,7 +14,8 @@
                             {% endif%}
               {% endif%}
             <div class="card-body">
-                <p ><h3><a href="{{ p.get_absolute_url}}"  style="color:black;" class="card-text"> {{p.name}} </a></h3></p>
+
+                <p ><h3><a href="{%url 'list_game_doctor' p.id%}"  style="color:black;" class="card-text"> {{p.name}} </a></h3></p>
               <p class="card-text">{{p.role}}</p>
               {% if p.biog%}
                             <p class="card-text">{{p.biog}}</p>
